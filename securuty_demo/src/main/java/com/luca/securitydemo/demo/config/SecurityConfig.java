@@ -52,14 +52,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        //退出
+        http.logout().logoutUrl("/logout").logoutSuccessUrl("/test/logout").permitAll();
         //配置没有权限跳转的页面
         http.exceptionHandling().accessDeniedPage("/unauth.html");
         http.formLogin() //自定义登录页面
                 .loginPage("/login.html")
                 .loginProcessingUrl("/user/login") //登录访问地址路径
-                .defaultSuccessUrl("/test/index").permitAll()  //登录成功后 跳转路径
+                .defaultSuccessUrl("/success.html").permitAll()
+                //.defaultSuccessUrl("/test/index").permitAll()  //登录成功后 跳转路径
                 .and().authorizeRequests()
-                .antMatchers("/","/test/hello","/user/login")
+                .antMatchers("/","/user/login")
                 .permitAll() //设置哪些路径可以直接访问，不认证
                 // 1 .antMatchers("/test/index").hasAuthority("admins") //设置这个路径必须有admin权限可以访问
                 // 2 .antMatchers("/test/index").hasAnyAuthority("admins,manager") //同上 赋值多个

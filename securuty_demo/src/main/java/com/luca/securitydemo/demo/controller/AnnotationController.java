@@ -11,6 +11,17 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * security 注解使用
+ *  前提：启动类上加：@EnableGlobalMethodSecurity(securedEnabled = true,prePostEnabled = true)
+ *    开启注解使用
+ *  @Secured():
+ *      必须有对应角色权限才能够访问资源
+ *  @PreAuthorize("hasAuthority('admin')")
+ *      对入参过滤 在方法之前认证 必须有admin权限
+ *  @PostAuthorize("hasAuthority('admin')")
+ *      对返回参数过滤 在方法之后校验 必须有admin权限
+ */
 @RestController
 @RequestMapping("annotation")
 public class AnnotationController {
@@ -29,8 +40,9 @@ public class AnnotationController {
     @GetMapping("preauthorize")
     @PreAuthorize("hasAuthority('admin')")
     //对入参过滤
-    @PreFilter("filterObject.username=='admin'")
+//    @PreFilter("filterObject.username=='admin'")
     public String test2() {
+        System.out.println("preauthorize");
         return "preauthorize";
     }
 
@@ -38,8 +50,9 @@ public class AnnotationController {
     @GetMapping("postauthorize")
     @PostAuthorize("hasAuthority('admin')")
     //对返回参数过滤
-    @PostFilter("filterObject.username=='admin'")
+//    @PostFilter("filterObject.username=='admin'")
     public String test3() {
+        System.out.println("postauthorize");
         return "postauthorize";
     }
 }

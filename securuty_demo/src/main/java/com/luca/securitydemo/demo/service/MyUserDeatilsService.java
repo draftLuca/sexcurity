@@ -21,7 +21,7 @@ public class MyUserDeatilsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
         //权限不支持null
-        List<GrantedAuthority> auths = AuthorityUtils.commaSeparatedStringToAuthorityList("manager,admin");
+        List<GrantedAuthority> auths = AuthorityUtils.commaSeparatedStringToAuthorityList("ROLE_manager");
         LambdaQueryWrapper<User> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(User::getUsername,s);
         User user = userService.getOne(wrapper);

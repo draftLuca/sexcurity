@@ -38,4 +38,9 @@ public class UserController extends ApiController {
     public String index() {
         return "hello index";
     }
+
+    @GetMapping("logout")
+    public String logout() {
+        return "logout";
+    }
 }
